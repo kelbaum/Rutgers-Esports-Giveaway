@@ -10,12 +10,14 @@ import random
 blacklist_on = False
 
 
+# roll a number
 def roll(n):
     # function call -> random.randint(a, b)
     # Return a random integer N such that a <= N <= b
     return random.randint(0, n - 1)
 
 
+# send message via Twilio
 def send_message():
     client = Client(reference.account_sid, reference.auth_token)
 

@@ -9,6 +9,7 @@ import main
 SCOPES = 'https://www.googleapis.com/auth/spreadsheets.readonly'
 
 
+# retrieves sheet
 def get_sheet():
     """Shows basic usage of the Sheets API.
     Prints values from a sample spreadsheet.
