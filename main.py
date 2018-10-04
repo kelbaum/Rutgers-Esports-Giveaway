@@ -29,6 +29,7 @@ def send_message():
     print(message.sid)
 
 
+# main
 if __name__ == "__main__":
     print("Hello! Welcome to the GiveawayBot! What would you like to do?")
     print('1. Load names and phone numbers in drawing.')
