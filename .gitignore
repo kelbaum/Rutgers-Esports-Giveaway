@@ -1,6 +1,7 @@
 # Extra
 *.json
-eboard*
+officers*
+new_officers*
 reference.py*
 run.py*
 .idea/
