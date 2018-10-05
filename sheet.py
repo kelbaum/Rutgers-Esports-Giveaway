@@ -46,16 +46,30 @@ def get_sheet():
 
 
 # A person (entry) is selected from 'values'
-def select_person(query, officers, new_officers):
+def select_person(query, officers, new_officers, officers_banned, new_officers_banned):
     # print(len(query))
     if len(query) == 0:
         print("The query is empty!")
         return []
     # add loop here for rerolls
-    while True:
+    if officers_banned is True and new_officers_banned is True:
+        while True:
+            index = main.roll(len(query))
+            if query[index][1] not in officers or query[index][1] not in new_officers:
+                break
+    elif officers_banned is True:
+        while True:
+            index = main.roll(len(query))
+            if query[index][1] not in officers:
+                break
+    elif new_officers_banned is True:
+        while True:
+            index = main.roll(len(query))
+            if query[index][1] not in new_officers:
+                break
+    else:
         index = main.roll(len(query))
-        if query[index][1] not in officers and query[index][1] not in new_officers:
-            break
+
     # print(query[index])
     print("Winner: " + query[index][1])
     return query[index]

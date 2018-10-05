@@ -67,12 +67,15 @@ if __name__ == "__main__":
         choice = input("Type number and hit enter: ")
         if choice == 1:
             query = sheet.get_sheet()
+
         elif choice == 2:
-            entry = sheet.select_person(query, officers, new_officers)
+            entry = sheet.select_person(query, officers, new_officers, officers_banned, new_officers_banned)
+
         elif choice == 3:
             print("Contacting " + entry[1] + " . . .")
             # send_message()
             # print("Winner has been contacted.")
+
         elif choice == 4:
             while constraint_choice != 3:
                 print("Current constraints:")
@@ -81,13 +84,11 @@ if __name__ == "__main__":
                 print("3. Go back.")
                 constraint_choice = input("Type the corresponding number and hit enter: ")
                 if constraint_choice == 1:
-                    # DO SOMETHING
                     if officers_banned is True:
                         officers_banned = False
                     else:
                         officers_banned = True
                 elif constraint_choice == 2:
-                    # DO SOMETHING
                     if new_officers_banned is True:
                         new_officers_banned = False
                     else:
@@ -96,8 +97,11 @@ if __name__ == "__main__":
                     continue
                 else:
                     print("Invalid input!")
+            constraint_choice = 0
+
         elif choice == 5:
             break
+
         else:
             print('Invalid input!')
 
