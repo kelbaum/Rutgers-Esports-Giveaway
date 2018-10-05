@@ -72,9 +72,12 @@ if __name__ == "__main__":
             entry = sheet.select_person(query, officers, new_officers, officers_banned, new_officers_banned)
 
         elif choice == 3:
-            print("Contacting " + entry[1] + " . . .")
-            # send_message()
-            # print("Winner has been contacted.")
+            if len(entry) == 0:
+                print("There is no winner selected!")
+            else:
+                print("Contacting " + entry[1] + " . . .")
+                # send_message()
+                # print("Winner has been contacted.")
 
         elif choice == 4:
             while constraint_choice != 3:
