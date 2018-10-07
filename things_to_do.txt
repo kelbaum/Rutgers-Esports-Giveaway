@@ -1,6 +1,6 @@
 IDEAS FOR GIVEAWAY APP:
 
-Add GUI for Giveaway app - WORKING ON
+Add GUI for Giveaway app - DONE
 Grab API key of Google Sheets to load names and phone numbers - DONE
 Have a roll function that randomly selects a Winner - DONE
 Have a blacklist that denies previous winners or eboard members - DONE
