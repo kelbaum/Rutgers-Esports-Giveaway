@@ -10,7 +10,7 @@ SCOPES = 'https://www.googleapis.com/auth/spreadsheets.readonly'
 
 
 # retrieves sheet
-def get_sheet():
+def get_sheet(key):
     """Shows basic usage of the Sheets API.
     Prints values from a sample spreadsheet.
     """
@@ -23,7 +23,7 @@ def get_sheet():
     service = build('sheets', 'v4', http=creds.authorize(Http()))
 
     # Call the Sheets API
-    result = service.spreadsheets().values().get(spreadsheetId=reference.SPREADSHEET_ID,
+    result = service.spreadsheets().values().get(spreadsheetId=key,
                                                 range=reference.RANGE_NAME).execute()
     values = result.get('values', [])
 
@@ -48,21 +48,23 @@ def get_sheet():
 # A person (entry) is selected from 'values'
 def select_person(query, officers, new_officers, officers_banned, new_officers_banned):
     # print(len(query))
+    # print(officers)
+    # print(new_officers)
     if len(query) == 0:
         print("The query is empty!")
         return []
     # add loop here for rerolls
-    if officers_banned is True and new_officers_banned is True:
+    if officers_banned == "Yes" and new_officers_banned == "Yes":
         while True:
             index = main.roll(len(query))
-            if query[index][1] not in officers or query[index][1] not in new_officers:
+            if query[index][1] not in officers and query[index][1] not in new_officers:
                 break
-    elif officers_banned is True:
+    elif officers_banned == "Yes":
         while True:
             index = main.roll(len(query))
             if query[index][1] not in officers:
                 break
-    elif new_officers_banned is True:
+    elif new_officers_banned == "Yes":
         while True:
             index = main.roll(len(query))
             if query[index][1] not in new_officers:
@@ -71,5 +73,5 @@ def select_person(query, officers, new_officers, officers_banned, new_officers_b
         index = main.roll(len(query))
 
     # print(query[index])
-    print("Winner: " + query[index][1])
+    # print("Winner: " + query[index][1])
     return query[index]

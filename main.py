@@ -2,12 +2,11 @@
 from twilio.rest import Client
 import reference
 import sheet
-import Tkinter
+from Tkinter import *
 import sys
 import random
 
 # Your Account Sid and Auth Token from twilio.com/console
-blacklist_on = False
 
 
 # roll a number
@@ -28,7 +27,7 @@ def read_textfile(filename):
     for line in textfile:
         line = line.strip('\n')
         array.append(line)
-    print(array)
+    # print(array)
     textfile.close()
     return array
 
@@ -45,6 +44,27 @@ def send_message():
     print(message.sid)
 
 
+def lock_api():
+    global key
+    print("API Key: %s" % api_entry.get())
+    # save API key in a global variable
+    key = api_entry.get()
+    global values
+    values = sheet.get_sheet(key)
+    api_entry.delete(0, END)
+    api_entry.insert(0, "**********")
+
+
+def roll_winner():
+    # print("Officers: %s" % officer_var.get())
+    # print("New Officers: %s" % new_officer_var.get())
+    # print(key)
+    global winner
+    winner = sheet.select_person(values, officers, new_officers, officer_var.get(), new_officer_var.get())
+    winner_entry.delete(0, END)
+    winner_entry.insert(0, winner[1])
+
+
 # main
 if __name__ == "__main__":
     officers = read_textfile("officers.txt")
@@ -52,12 +72,54 @@ if __name__ == "__main__":
     officers_banned = False
     new_officers_banned = False
 
-    print("Hello! Welcome to the GiveawayBot! What would you like to do?")
+    print("Hello! Welcome to the GiveawayBot! Go to the Python App!")
+    '''
     choice = 0
     constraint_choice = 0
     query = []
     entry = []
+    '''
 
+    # initialize Tk object (window)
+    master = Tk()
+
+    # Labels
+    Label(master, text="Lock API key to load names and numbers, then roll for winner.").grid(row=0)
+    Label(master, text="API Key:").grid(row=1)
+    Label(master, text="Blacklist Officers?").grid(row=2, column=0)
+    Label(master, text="Blacklist New Officers?").grid(row=3, column=0)
+    Label(master, text="Winner:").grid(row=4)
+
+    # Entries
+    api_entry = Entry(master)
+    api_entry.grid(row=1, column=1)
+    winner_entry = Entry(master)
+    winner_entry.grid(row=4, column=1)
+
+    # Options
+    officer_var = StringVar(master)
+    officer_var.set("No")  # initial value
+    officer_option = OptionMenu(master, officer_var, "Yes", "No")
+    officer_option.grid(row=2, column=1)
+    new_officer_var = StringVar(master)
+    new_officer_var.set("No")  # initial value
+    new_officer_option = OptionMenu(master, new_officer_var, "Yes", "No")
+    new_officer_option.grid(row=3, column=1)
+
+    # Buttons
+    Button(master, text='Lock API', command=lock_api).grid(row=1, column=2, sticky=W, pady=4)
+    Button(master, text='Roll', command=roll_winner).grid(row=4, column=2, sticky=W, pady=4)
+    Button(master, text='Send SMS', command=roll_winner).grid(row=4, column=3, sticky=W, pady=4)
+    Button(master, text='Quit', command=master.quit).grid(row=5, column=0, sticky=W, pady=4)
+    # Button(master, text='Show', command=show_entry_fields).grid(row=6, column=1, sticky=W, pady=4)
+
+    # loop for App
+    mainloop()
+
+    '''
+    OLD CODE THROUGH TERMINAL
+    '''
+    '''
     while choice != 5:
         print('1. Load names and phone numbers in drawing.')
         print('2. Select a winner.')
@@ -109,3 +171,4 @@ if __name__ == "__main__":
             print('Invalid input!')
 
     print("Thank you for using the GiveawayBot! Goodbye~")
+    '''
