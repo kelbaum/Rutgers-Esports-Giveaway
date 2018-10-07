@@ -52,7 +52,7 @@ def lock_api():
     global values
     values = sheet.get_sheet(key)
     api_entry.delete(0, END)
-    api_entry.insert(0, "**********")
+    api_entry.insert(0, "********************")
 
 
 def roll_winner():
