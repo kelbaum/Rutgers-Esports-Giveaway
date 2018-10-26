@@ -34,16 +34,38 @@ def read_textfile(filename):
 
 # send message via Twilio
 def send_message():
-    client = Client(reference.account_sid, reference.auth_token)
+    print(winner)
+    name = winner[1]
+    if len(winner) < 3:
+        print("%s does not have a phone number!", name)
+        return
+    else:
+        phone_number = format_phone_number(winner[2])
+        phone_number = '+1' + phone_number
+        print(phone_number)
+        '''
+        client = Client(reference.account_sid, reference.auth_token)
+        
+        message = client.messages.create(
+            body="Congratulations! You won a Rutgers Esports giveaway! Come to the giveaway table to claim your prize!",
+            from_=reference.phone_from,
+            to=phone_number)
 
-    message = client.messages.create(
-        body="Congratulations! You won a Rutgers Esports giveaway! Come to the giveaway table to claim your prize!",
-        from_=reference.phone_from,
-        to=reference.phone_to)
-
-    print(message.sid)
+        print(message.sid)
+        '''
 
 
+# format phone number to fit for Twilio
+def format_phone_number(phone_number):
+    new_number = ''
+    for i in phone_number:
+        if '0' <= i <= '9':
+            new_number += i
+    # print(new_number)
+    return new_number
+
+
+# lock Spreadsheet ID for Google Sheets API and get values
 def lock_api():
     global key
     print("API Key: %s" % api_entry.get())
@@ -109,7 +131,7 @@ if __name__ == "__main__":
     # Buttons
     Button(master, text='Lock API', command=lock_api).grid(row=1, column=2, sticky=W, pady=4)
     Button(master, text='Roll', command=roll_winner).grid(row=4, column=2, sticky=W, pady=4)
-    Button(master, text='Send SMS', command=roll_winner).grid(row=4, column=3, sticky=W, pady=4)
+    Button(master, text='Send SMS', command=send_message).grid(row=4, column=3, sticky=W, pady=4)
     Button(master, text='Quit', command=master.quit).grid(row=5, column=0, sticky=W, pady=4)
     # Button(master, text='Show', command=show_entry_fields).grid(row=6, column=1, sticky=W, pady=4)
 
