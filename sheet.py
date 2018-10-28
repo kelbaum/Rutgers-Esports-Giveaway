@@ -23,8 +23,13 @@ def get_sheet(key):
     service = build('sheets', 'v4', http=creds.authorize(Http()))
 
     # Call the Sheets API
+    sheet_info = service.spreadsheets().get(spreadsheetId=key).execute()
+    sheet_title = sheet_info['sheets'][0]['properties']['title']
+    # print(sheet_name['sheets'][0]['properties']['title'])
+    # set range to range_name
+    range_name = sheet_title + '!A2:C'
     result = service.spreadsheets().values().get(spreadsheetId=key,
-                                                range=reference.RANGE_NAME).execute()
+                                                range=range_name).execute()
     values = result.get('values', [])
 
     if not values:
